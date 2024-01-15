@@ -1,0 +1,12 @@
+.recovery {
+    padding: 60px 20px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px; 
+}
+
+.field__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

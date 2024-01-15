@@ -1,0 +1,30 @@
+.registration { 
+    padding: 60px 20px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px; 
+}
+
+.registration__preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.field__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.registration__text {
+    font-size: 14px;
+    font-weight: 4000;
+    font-family: "Jost", sans-serif;
+}
+
+.registration__text--purple {
+    color: #775CE5;
+}
+
