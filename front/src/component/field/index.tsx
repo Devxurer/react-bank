@@ -2,23 +2,23 @@ import React from "react";
 import "./index.css"
 
 interface InputField {
-    type ?: string,
-    label ?: string,
+    type?: string,
+    label?: string,
     style?: React.CSSProperties;
-    placeholder ?: string,
-    name ?: string,
-    сlassName ?: string,
+    placeholder?: string,
+    name?: string,
+    сlassName?: string,
     value?: string | number;
 	showPass?: boolean;
-    alert ?: string,
+    alert?: string,
 	onPassVisibility?: () => void;
     onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Field: React.FC<InputField> = ({label, type = "text", style, placeholder, name, value, showPass = false, alert, onPassVisibility, onInput}) => {
+const Field: React.FC<InputField> = ({label, type = "text", style, placeholder, name, value, showPass = false, alert, onPassVisibility, onInput }) => {
 
     const inputType = type === "password" && !showPass ? "password" : "text";
-
+    
     return (
         <div className="field">
             <label className="field__label">{label}</label>

@@ -35,7 +35,7 @@ const SignIn: React.FC<SignInProps> = ({children}) => {
         e.preventDefault();
 
         const { email, password } = state;
-        const convertData = JSON.stringify({email, password, getInfo:window.navigator.userAgent});
+        const convertData = JSON.stringify({email, password});
 
         try {
             const res = await fetch("http://localhost:4000/signin", {
@@ -62,7 +62,7 @@ const SignIn: React.FC<SignInProps> = ({children}) => {
             }
 
         } catch(e: any) {
-            console.error(e.message)
+            console.error(e)
         }
     }
 

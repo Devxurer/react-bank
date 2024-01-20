@@ -97,7 +97,8 @@ const SignUp: React.FC<SignUpPage> = ({children}) => {
 							alert={state.messageE}
 							type="email"
 							value={state.email}
-							style={{ borderColor: state.messageE ? 'rgb(217, 43, 73)' : '' }} 
+							style={{ borderColor: state.messageE ? 'rgb(217, 43, 73)' : '' }}
+							
 						></Field>
 						<Field
 							onInput={handlePassInput}

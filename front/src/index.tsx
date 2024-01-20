@@ -6,7 +6,7 @@ import "./index.css";
 
 import App from "./App";
 
-	// import { loadSession } from './util/session';
+// import { loadSession } from './util/session';
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

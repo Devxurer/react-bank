@@ -16,6 +16,11 @@
     border-radius: 12px;
     border: 1px solid #E9E8EB;
     width: 100%;
+    transition: border-color 0.3s ease;
+}
+
+.field__input:focus {
+    border-color: #775CE5;
 }
 
 .on, .off {

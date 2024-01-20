@@ -11,8 +11,10 @@ const router = express.Router()
 // Використовуйте інші файли роутів, якщо є
 
 const auth = require("./auth")
+const actions = require("./actions")
 
 router.use("/", auth)
+router.use("/", actions)
 
 router.get('/', (req, res) => {
   res.status(200).json('Hello World')

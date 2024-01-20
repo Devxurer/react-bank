@@ -2,7 +2,7 @@ export const SESSION_KEY: string = 'sessionAuth'
 
 interface Session {
 	token: string;
-  }
+}
 
 export const saveSession = (session: Session): void => {
   try {

@@ -9,9 +9,9 @@ interface Heading {
 
 const Header: React.FC<Heading> = ({title, text, className = ""}) => {
     return (
-        <header className="heading">
-            <h1 className="heading__title">{title}</h1>
-            <p className="heading__text">{text}</p>
+        <header className = {`heading ${className}`}>
+            <h1 className = {`heading__title ${className}`}>{title}</h1>
+            <p className = {`heading__text ${className}`}>{text}</p>
         </header>
     )
 }

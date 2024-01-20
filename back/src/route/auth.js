@@ -9,6 +9,14 @@ const { Session } = require("../class/session")
 const { User } = require("../class/user")
 const { Confirm } = require("../class/confirm")
 
+
+User.create({
+	email: 'neo@mail.com',
+	password: 'neoneoNEO5',
+});
+	User.userConfirm('neo@mail.com');
+
+
 //===================================================
 
 router.post('/signup', function (req, res) {	
@@ -111,7 +119,7 @@ router.post('/signup-confirm', function (req, res) {
 //===================================================
 
 router.post("/signin", function(req, res) {
-    const { email, password, getInfo} = req.body
+    const { email, password } = req.body
 
     if (!email || !password) {
         return res.status(400).json({
@@ -140,16 +148,16 @@ router.post("/signin", function(req, res) {
 
         const session = Session.create(user);
         console.log("Current Session ", session);
-
-        Notification.create({action:'sign in', name:user.email , info:getInfo});
+		console.log("Email: ", email);
 
         return res.status(200).json({
             message: "Welcome!",
             session,
-        })        
+        })
+		        
     } catch (e) {
         return res.status(400).json({
-            message: "Enter valid user details",
+            message: "Enter valid email or check your password and try again",
             field: "data",
         })
     }
@@ -195,7 +203,7 @@ router.post("/recovery", function(req, res) {
 //===================================================
 
 router.post("/recovery-confirm", function(req, res) {
-	const { code, password, getInfo } = req.body
+	const { code, password } = req.body
 
 	if (!code) {
 		return res.status(400).json({
@@ -219,11 +227,10 @@ router.post("/recovery-confirm", function(req, res) {
 		User.updateData(user, typeNewData="password", password);
 		console.log("Updated: ", user);
 
-		Notification.create({action:'data recovery', name:user.email , info:getInfo});
-
 		return res.status(200).json({
 			message: "Sign In with new password!",
 		})
+		
 	} catch (e) {
 		return res.status(400).json({
 			message: "Password change error. Check your code or try again",

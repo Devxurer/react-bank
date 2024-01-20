@@ -8,6 +8,8 @@ import Confirm from "./container/signup-confirm";
 import RecoveryPage from "./container/recovery";
 import RecoveryConfirmPage from "./container/recovery-confirm"
 import BalancePage from "./container/balance";
+import SendPage from "./container/send";
+import TransactionPage from "./container/transaction";
 
 
 const AuthContext = createContext<boolean | null>(null);
@@ -18,8 +20,8 @@ const PrivateRoute: React.FC<{children: React.ReactNode}> = ({children}) => {
 };
 
 const AuthRoute: React.FC<{children: React.ReactNode}> = ({children}) => {
-	const isLogged = useContext(AuthContext)
-	return isLogged ? <BalancePage/> : <>{children}</> 
+	const isLogged = useContext(AuthContext) 
+	return isLogged ? <BalancePage children/> : <>{children}</> 
 }; 
 
 
@@ -89,9 +91,25 @@ function App() {
          <Route path="/balance"
          element={
            <PrivateRoute>
-             <BalancePage />
+             <BalancePage children/>
            </PrivateRoute>
          }
+         />
+
+         <Route path="/send"
+          element={
+            <PrivateRoute>
+              <SendPage children/>
+            </PrivateRoute>
+          }
+         />
+
+         <Route path="/transaction/:id"
+          element={
+            <PrivateRoute>
+              <TransactionPage children/>
+            </PrivateRoute>
+          }
          />
 
       </Routes>
