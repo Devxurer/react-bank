@@ -7,18 +7,19 @@ import Header from "../../component/header";
 import Button from "../../component/buttons";
 import Alert from "../../component/alert-message";
 import Field from "../../component/field";
+import Section from "../../component/section";
 
-import {validate, initialState, SET, reducer } from '../../util/form';
+import { validate, initialState, SET, reducer } from '../../util/form';
 import { getTokenSession, saveSession } from "../../util/session";
-import ArrowBack from "../../component/history-back";
+import ArrowBack from "../../component/back-button";
 
 interface ConfirmPage {
-    children: React.ReactNode;
+	children: React.ReactNode;
 }
 
 const Confirm: React.FC<ConfirmPage> = ({ children }) => {
 	const navigate = useNavigate();
-    const [state, dispatch] = useReducer(reducer, initialState);
+	const [state, dispatch] = useReducer(reducer, initialState);
 
 	const handleCodeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const errorMessage = validate(e.target.value);
@@ -30,53 +31,53 @@ const Confirm: React.FC<ConfirmPage> = ({ children }) => {
 		e.preventDefault();
 		const { code } = state;
 
-		if (!code) {			
+		if (!code) {
 			dispatch({ type: SET.SET_MESSAGE_CODE, payload: `Enter your code!` });
 			return;
 		}
 
-		const convertData = JSON.stringify({code, token: getTokenSession(), getInfo:window.navigator.userAgent})
-			
+		const convertData = JSON.stringify({ code, token: getTokenSession(), getInfo: window.navigator.userAgent })
+
 		try {
 			const res = await fetch('http://localhost:4000/signup-confirm', {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: convertData,
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: convertData,
 			})
 
 			const data = await res.json()
 
-			if (!res.ok && data.field === 'data') {				
+			if (!res.ok && data.field === 'data') {
 				dispatch({ type: SET.SET_MESSAGE_DATA, payload: data.message });
 				return;
 			} else if (res.ok) {
-				saveSession(data.session);		
+				saveSession(data.session);
 				navigate("/balance");
 			}
-		} catch(err: any) {
+		} catch (err: any) {
 			console.error(err.message)
 		}
 	}
 
-    return (
-        <Page>
-            <section className="confirm">
-                <ArrowBack />
-                <Header title="Confirm" text=""/>
+	return (
+		<Page>
+			<Section>
+				<ArrowBack />
+				<Header title="Confirm" text="" />
 
-                <form method="POST" onSubmit={handleSubmit}>
-                    <div className="field__wrapper">
+				<form method="POST" onSubmit={handleSubmit}>
+					<div className="field__wrapper">
 						<Field
-						    onInput={handleCodeInput}
+							onInput={handleCodeInput}
 							label="Code"
 							placeholder="Enter the received code"
 							alert={state.messageCode}
 							type="text"
 							value={state.code}
-							style={{ borderColor: state.messageCode ? 'rgb(217, 43, 73)' : '' }} 
-							></Field>
+							style={{ borderColor: state.messageCode ? 'rgb(217, 43, 73)' : '' }}
+						></Field>
 
 						<Button
 							type="submit"
@@ -84,17 +85,17 @@ const Confirm: React.FC<ConfirmPage> = ({ children }) => {
 						>
 							Confirm
 						</Button>
-						
+
 						<Alert
-								className={`alert--warn ${state.messageData}disabled`}
-							>
-								{state.messageData}
+							className={`alert--warn ${state.messageData}disabled`}
+						>
+							{state.messageData}
 						</Alert>
-                    </div>
-				</form>		
-            </section>
-        </Page>
-    )
+					</div>
+				</form>
+			</Section>
+		</Page>
+	)
 }
 
 export default Confirm;

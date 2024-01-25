@@ -10,7 +10,9 @@ import RecoveryConfirmPage from "./container/recovery-confirm"
 import BalancePage from "./container/balance";
 import SendPage from "./container/send";
 import TransactionPage from "./container/transaction";
-
+import NotificationPage from "./container/notification";
+import ReceivePage from "./container/receive";
+import SettingsPage from "./container/settings";
 
 const AuthContext = createContext<boolean | null>(null);
 
@@ -112,6 +114,29 @@ function App() {
           }
          />
 
+         <Route path="/notifications"
+          element={
+            <PrivateRoute>
+              <NotificationPage children/>
+            </PrivateRoute>
+          }
+         />
+
+         <Route path="/receive"
+          element={
+            <PrivateRoute>
+              <ReceivePage children/>
+            </PrivateRoute>
+          }
+         />
+
+         <Route path="settings"
+          element={
+            <PrivateRoute>
+              <SettingsPage children/>
+            </PrivateRoute>
+          }
+         />
       </Routes>
     </BrowserRouter>
     </AuthContext.Provider>

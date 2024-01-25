@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./index.css";
 
 import Page from "../../page";
-import List from "../../component/transaction-list";
+import List from "../../component/list";
 
 interface BalancePageProps {
     children?: React.ReactNode;
@@ -37,26 +37,26 @@ const BalancePage: React.FC<BalancePageProps> = () => {
         getData();
     }, []);
 
-    const handleItemClick = (id: number) => async() => {
+    const handleItemClick = (id: number) => async () => {
         await fetch(`http://localhost:4000/transaction?id=${id}`);
 
-			window.location.assign(`http://localhost:3000/transaction/${id}`);
+        window.location.assign(`http://localhost:3000/transaction/${id}`);
     }
 
-    return(
+    return (
         <Page>
             <section className="balance-page">
                 <div className="balance__heading">
                     <div className="balance__menu">
 
                         <Link to="/settings">
-                            <img src="/svg/settings.svg" />
+                            <img className="icon" src="/svg/settings.svg" />
                         </Link>
 
-                        <p style={{fontSize: "16px", color: "white", fontFamily: "Jost", fontWeight: "400"}}>Main wallet</p>
+                        <p style={{ fontSize: "16px", color: "white", fontFamily: "Jost", fontWeight: "400" }}>Main wallet</p>
 
                         <Link to="/notifications">
-                            <img src="/svg/notifications.svg" />
+                            <img className="icon" src="/svg/notifications.svg" />
                         </Link>
 
                     </div>
@@ -71,34 +71,34 @@ const BalancePage: React.FC<BalancePageProps> = () => {
                                 <img className="icon-button--actions" src="/svg/receive.svg" />
                             </div>
                         </Link>
-                            <p className="icon-button__text">Receive</p>
+                        <p className="icon-button__text">Receive</p>
                         <Link to="/send">
                             <div className="icon-button">
                                 <img className="icon-button--actions" src="/svg/send.svg" />
                             </div>
                         </Link>
-                            <p className="icon-button__text">Send</p>
+                        <p className="icon-button__text">Send</p>
                     </div>
 
                 </div>
 
                 <div className="transaction__list">
                     {data?.list.length !== 0
-						? data?.list.map((trans) => (
-							<React.Fragment key={trans.id}>
-								<List
-									onItemClick={handleItemClick(trans.id)}
-									
-									className={trans.type === 'send' ? `profile ${trans.source}` : trans.source}
-									title={trans.source.toUpperCase()}
-									info={trans.type === 'send' ? `- $ ${trans.amount}` : `+ $ ${trans.amount}`}
-									details={trans.date}
-								></List>
-							</React.Fragment>
-						))
+                        ? data?.list.map((trans) => (
+                            <React.Fragment key={trans.id}>
+                                <List
+                                    onItemClick={handleItemClick(trans.id)}
+
+                                    className={trans.type === 'send' ? `profile ${trans.source}` : trans.source}
+                                    title={trans.source.toUpperCase()}
+                                    info={trans.type === 'send' ? `- $ ${trans.amount}` : `+ $ ${trans.amount}`}
+                                    details={trans.date}
+                                ></List>
+                            </React.Fragment>
+                        ))
                         : <p>Everething will be okay</p>
-                        }
-                    </div>
+                    }
+                </div>
 
             </section>
         </Page>

@@ -3,9 +3,10 @@ import { useParams } from "react-router-dom";
 import "./index.css";
 
 import Page from "../../page";
-import Header from "../../component/header";
-import ArrowBack from "../../component/history-back";
+import AccountHeader from "../../component/account-header";
+import ArrowBack from "../../component/back-button";
 import Divider from "../../component/divider";
+import Section from "../../component/section";
 
 
 interface transactionProps {
@@ -21,10 +22,10 @@ interface Transaction {
     type: string,
 }
 
-const Transaction: React.FC<transactionProps> = ({children, className = ""}) => {
+const Transaction: React.FC<transactionProps> = ({ children, className = "" }) => {
     const [info, setInfo] = useState<Transaction | null>(null);
 
-    const {id} = useParams<{id?: any}>();
+    const { id } = useParams<{ id?: any }>();
 
     const getData = async () => {
         try {
@@ -47,11 +48,10 @@ const Transaction: React.FC<transactionProps> = ({children, className = ""}) => 
 
     return (
         <Page>
-            <section className="transaction-page">
-                <div className="transaction__heading">
-                    <ArrowBack />
-                    <Header title="Transaction" className="heading__title--account"/>
-                </div>
+            <Section>
+                <AccountHeader title="Transaction">
+                    <ArrowBack path="/balance"/>
+                </AccountHeader>
 
                 <h1 className={`amount ${info?.type === "send" ? "amount--send" : "amount--receive"}`}>
                     {info?.type === "send" ? `- $${info?.amount}` : `+ $${info?.amount}`}
@@ -73,7 +73,7 @@ const Transaction: React.FC<transactionProps> = ({children, className = ""}) => 
                         <p>{info?.type}</p>
                     </div>
                 </div>
-            </section>
+            </Section>
         </Page>
     )
 }

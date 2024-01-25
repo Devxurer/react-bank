@@ -34,3 +34,8 @@
     border: 1px solid #775CE5;
     font-family: "Jost", sans-serif;
 }
+
+.button--alert {
+    color: #F23152;
+    border-color: #F23152;
+}

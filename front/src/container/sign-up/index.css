@@ -1,10 +1,3 @@
-.registration { 
-    padding: 60px 20px 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 32px; 
-}
-
 .registration__preview {
     display: flex;
     flex-direction: column;
@@ -18,13 +11,20 @@
     gap: 20px;
 }
 
-.registration__text {
+.text {
     font-size: 14px;
-    font-weight: 4000;
+    color: #1D1D1F;
     font-family: "Jost", sans-serif;
 }
 
-.registration__text--purple {
+.text--purple {
     color: #775CE5;
+    transition: opacity 0.3s;
 }
+
+.text--purple:hover {
+    opacity: 0.7;
+}
+
+
 
