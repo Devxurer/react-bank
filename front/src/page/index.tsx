@@ -1,18 +1,16 @@
 import React from "react";
 import "./index.css";
 
-interface PageProps {
-    children: React.ReactNode;
+interface StageProps {
+  children: React.ReactNode;
 }
 
-const Page: React.FC<PageProps> = ({children}) => {
-    return (
-        <div style={{padding: "25px"}}>
-            <div className="wrapper">
-                {children}
-            </div>
-        </div>
-    )
-}
+const Stage: React.FC<StageProps> = ({ children }) => {
+  return (
+    <div style={{ padding: "25px" }}>
+      <div className="wrapper">{children}</div>
+    </div>
+  );
+};
 
-export default Page;
+export default Stage;

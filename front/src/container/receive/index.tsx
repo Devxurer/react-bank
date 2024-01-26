@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import "./index.css";
 
-import Page from "../../page";
+import Stage from "../../page";
 import AccountHeader from "../../component/account-header";
 import Section from "../../component/section";
 import ArrowBack from "../../component/back-button";
@@ -61,7 +61,7 @@ const Receive: React.FC<receiveProps> = ({ children }) => {
     }
   };
   return (
-    <Page>
+    <Stage>
       <Section>
         <AccountHeader title="Receive">
           <ArrowBack />
@@ -114,7 +114,7 @@ const Receive: React.FC<receiveProps> = ({ children }) => {
           />
         </div>
       </Section>
-    </Page>
+    </Stage>
   );
 };
 

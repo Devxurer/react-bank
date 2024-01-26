@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./index.css";
 
-import Page from "../../page";
+import Stage from "../../page";
 import List from "../../component/list";
 
 interface BalancePageProps {
@@ -44,7 +44,7 @@ const BalancePage: React.FC<BalancePageProps> = () => {
   };
 
   return (
-    <Page>
+    <Stage>
       <section className="balance-page">
         <div className="balance__heading">
           <div className="balance__menu">
@@ -114,7 +114,7 @@ const BalancePage: React.FC<BalancePageProps> = () => {
           )}
         </div>
       </section>
-    </Page>
+    </Stage>
   );
 };
 

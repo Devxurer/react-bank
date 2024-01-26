@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 import "./index.css";
 
-import Page from "../../page/index";
+import Stage from "../../page/index";
 import Button from "../../component/buttons";
 import ArrowBack from "../../component/back-button";
 import Header from "../../component/header";
@@ -76,7 +76,7 @@ const RecoveryConfirm: React.FC<RecoveryConfirmProps> = ({ children }) => {
   };
 
   return (
-    <Page>
+    <Stage>
       <Section>
         <ArrowBack path="/balance" />
 
@@ -117,7 +117,7 @@ const RecoveryConfirm: React.FC<RecoveryConfirmProps> = ({ children }) => {
           </div>
         </form>
       </Section>
-    </Page>
+    </Stage>
   );
 };
 

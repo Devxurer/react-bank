@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import "./index.css";
 
-import Page from "../../page";
+import Stage from "../../page";
 import Header from "../../component/header";
 import Button from "../../component/buttons";
 import Alert from "../../component/alert-message";
@@ -56,7 +56,7 @@ const Recovery: React.FC<RecoveryProps> = ({ children }) => {
   };
 
   return (
-    <Page>
+    <Stage>
       <Section>
         <ArrowBack />
         <Header title="Recover password" text="Choose a recovery method" />
@@ -83,7 +83,7 @@ const Recovery: React.FC<RecoveryProps> = ({ children }) => {
           </div>
         </form>
       </Section>
-    </Page>
+    </Stage>
   );
 };
 
