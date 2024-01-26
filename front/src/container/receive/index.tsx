@@ -12,101 +12,110 @@ import List from "../../component/list";
 import { SET, reducer, initialState, validate } from "../../util/form";
 
 interface receiveProps {
-    children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const Receive: React.FC<receiveProps> = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const errorMessage = validate(e.target.value);
-        dispatch({ type: SET.SET_AMOUNT, payload: e.target.value });
-        dispatch({ type: SET.SET_MESSAGE_SUM, payload: errorMessage });
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const errMessage = validate(e.target.value);
+    dispatch({ type: SET.SET_AMOUNT, payload: e.target.value });
+    dispatch({ type: SET.SET_MESSAGE_SUM, payload: errMessage });
+  };
+
+  const handleItemClick = async (source: string) => {
+    const { amount } = state;
+    if (!amount) {
+      dispatch({ type: SET.SET_MESSAGE_SUM, payload: "Enter amount" });
+      return;
     }
 
-    const handleItemClick = async (source: string) => {
-        const { amount } = state;
-        if (!amount) {
-            dispatch({ type: SET.SET_MESSAGE_SUM, payload: "Enter amount" });
-            return;
+    const data = { amount, source, type: "receive" };
+    const convData = JSON.stringify(data);
+
+    try {
+      const res = await fetch("http://localhost:4000/receive", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: convData,
+      });
+
+      const data = await res.json();
+      if (!res.ok && data.field === "field") {
+        dispatch({ type: SET.SET_MESSAGE_DATA, payload: data.message });
+        return;
+      } else if (res.ok) {
+        const move = window.confirm("Are u sure ?");
+
+        if (move) {
+          window.location.assign(
+            `http://localhost:3000/transaction/${data.newTransaction.transactionId}`
+          );
         }
-
-        const data = { amount, source, type: "receive" };
-        const convertData = JSON.stringify(data);
-
-        try {
-            const res = await fetch("http://localhost:4000/receive", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: convertData,
-            })
-
-            const data = await res.json()
-            if (!res.ok && data.field === "field") {
-                dispatch({ type: SET.SET_MESSAGE_DATA, payload: data.message });
-                return;
-            } else if (res.ok) {
-                const move = window.confirm("Are u sure ?")
-
-                if (move) {
-                    window.location.assign(`http://localhost:3000/transaction/${data.newTransaction.transactionId}`);
-                }
-            }
-        } catch (e: any) {
-            console.error(e.message)
-        }
+      }
+    } catch (e: any) {
+      console.error(e.message);
     }
-    return (
-        <Page>
-            <Section>
-                
-                <AccountHeader title="Receive">
-                    <ArrowBack />
-                </AccountHeader>
+  };
+  return (
+    <Page>
+      <Section>
+        <AccountHeader title="Receive">
+          <ArrowBack />
+        </AccountHeader>
 
-                <div className="receive__payment">
-                    <p className="receive__subtitle">Receive amount</p>
-                    <Field
-                        placeholder="Amount"
-                        type="number"
-                        alert={state.messageSum}
-                        value={state.amount}
-                        onInput={handleInput}
-                        style={{ borderColor: state.messageSum ? "rgb(217, 43, 73)" : "" }}
-                    />
+        <div className="receive__payment">
+          <p className="receive__subtitle">Receive amount</p>
+          <Field
+            placeholder="Amount"
+            type="number"
+            alert={state.messageSum}
+            value={state.amount}
+            onInput={handleInput}
+            style={{ borderColor: state.messageSum ? "rgb(217, 43, 73)" : "" }}
+          />
 
-                    <Alert className={`alert--warn ${state.messageData}disabled`}>
-                        {state.messageData}
-                    </Alert>
+          <Alert className={`alert--warn ${state.messageData}disabled`}>
+            {state.messageData}
+          </Alert>
+        </div>
 
-                </div>
+        <Divider />
 
-                <Divider />
+        <div className="receive__payment">
+          <p className="receive__subtitle">Payment system</p>
 
-                <div className="receive__payment">
-                    <p className="receive__subtitle">Payment system</p>
-
-                    <List
-                        className="stripe"
-                        title="Stripe"
-                        info=""
-                        style={{ backgroundImage: `url("../../../svg/group-1.svg")`, width: "160px", height: "20px", zIndex: "2" }}
-                        onItemClick={() => handleItemClick("Stripe")}
-                    />
-                    <List
-                        className="coinbase"
-                        title="Coinbase"
-                        info=""
-                        style={{ backgroundImage: `url("../../../svg/group-2.svg")`, width: "160px", height: "20px", zIndex: "2" }}
-                        onItemClick={() => handleItemClick("Coinbase")}
-                    />
-                </div>
-           
-            </Section>
-        </Page>
-    )
-}
+          <List
+            className="stripe"
+            title="Stripe"
+            info=""
+            style={{
+              backgroundImage: `url("../../../svg/group-1.svg")`,
+              width: "160px",
+              height: "20px",
+              zIndex: "2",
+            }}
+            onItemClick={() => handleItemClick("Stripe")}
+          />
+          <List
+            className="coinbase"
+            title="Coinbase"
+            info=""
+            style={{
+              backgroundImage: `url("../../../svg/group-2.svg")`,
+              width: "160px",
+              height: "20px",
+              zIndex: "2",
+            }}
+            onItemClick={() => handleItemClick("Coinbase")}
+          />
+        </div>
+      </Section>
+    </Page>
+  );
+};
 
 export default Receive;

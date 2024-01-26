@@ -5,8 +5,8 @@ const express = require('express')
 const router = express.Router()
 
 //* Підключаю файли класів
-const { User } = require('../class/user')
-const { Notification } = require('../class/notification')
+const { Customer } = require('../class/user')
+const { Notify } = require('../class/notification')
 const { Transaction } = require('../class/transaction')
 
 Transaction.create({
@@ -14,27 +14,22 @@ Transaction.create({
   amount: 150,
   source: 'STRIPE',
 })
-
 Transaction.create({
   type: 'send',
   amount: 10,
   source: 'girlfriend2@gmail.com',
 })
-
-Notification.create({
+Notify.create({
   action: 'notification',
   name: 'Bank Corp.',
   info: 'Congradulations! Enjoy to use our bank.',
 })
-
-Notification.create({
+Notify.create({
   action: 'sign up',
   name: 'anonimous@anonim.com',
   info: '(Linux)',
 })
-
 //===================================================
-
 router.get('/balance', function (req, res) {
   res.json({
     balance: Transaction.getBalance(),
@@ -42,9 +37,7 @@ router.get('/balance', function (req, res) {
     notifications: Notification.getUnread().length,
   })
 })
-
 //===================================================
-
 router.post('/send', function (req, res) {
   const { source, amount, type } = req.body
 
@@ -84,7 +77,6 @@ router.post('/send', function (req, res) {
 })
 
 //===================================================
-
 router.get('/transaction', function (req, res) {
   const id = Number(req.query.id)
 
@@ -92,42 +84,31 @@ router.get('/transaction', function (req, res) {
     info: Transaction.getById(id),
   })
 })
-
-//===================================================
-
+//==================================================
 router.get('/notifications', function (req, res) {
-  res.json(Notification.getList())
+  res.json(Notify.getList())
 })
-
 //===================================================
-
 router.get('/notifications/update', function (req, res) {
   const id = Number(req.query.id)
-
   try {
-    const updated = Notification.update(id)
-
+    const updated = Notify.update(id)
     if (!updated) {
       throw new Error('Notification not found')
     }
-
     res.json({ success: true })
   } catch (e) {
     console.error('Error updating ifUnread status: ', e)
   }
 })
-
 //===================================================
-
 router.post('/receive', function (req, res) {
   const { amount, source, type } = req.body
-
   if (!amount) {
     return res.status(400).json({
       message: 'Enter the amount !',
     })
   }
-
   try {
     const newTransaction = Transaction.create({
       type,
@@ -135,7 +116,6 @@ router.post('/receive', function (req, res) {
       source,
     })
     console.log(newTransaction)
-
     return res.status(200).json({
       message: 'Success!',
       newTransaction,
@@ -153,11 +133,9 @@ router.post('/settings', function (req, res) {
   const { currentData, typeNewData, newData, customerId } =
     req.body
   console.log(currentData, newData, customerId)
-
   try {
-    const user = User.getByData(customerId)
+    const user = Customer.getByData(customerId)
     console.log(user)
-
     if (!user) {
       return res.status(400).json({
         message:
@@ -170,10 +148,8 @@ router.post('/settings', function (req, res) {
         field: 'password',
       })
     }
-
-    User.updateData(user, typeNewData, newData)
+    Customer.updateData(user, typeNewData, newData)
     console.log('Updated user: ', user)
-
     return res.status(200).json({
       message: 'Updated successful!',
     })
